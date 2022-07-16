@@ -1,0 +1,9 @@
+{% extends "polls\base.html" %}
+{% block title %}Hi{% endblock title %}
+{% block body %}THis is form1
+    <form method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+    <input type="submit" value="Submit"/>
+    </form>
+{% endblock body%}

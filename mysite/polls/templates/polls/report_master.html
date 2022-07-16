@@ -1,0 +1,22 @@
+{% extends 'polls\base.html' %}
+{% block title %}Hi zzzz{% endblock title %}
+{% block body %}Enter a new report details
+
+<form method="post">
+    {% csrf_token%}
+    <h1>Welcome To Report creation!!</h1>
+    <label>Report Name
+         <select name="report_name" >
+        {% for rep in report_list %}
+            <option id="{{rep.Report_idfr}}" value="{{rep.Report_desc}}" label="{{rep}}" style="width:150px;"></option>
+             {% endfor%}
+             <label>Report path<input name=report_path type="text" value="{{rep.Report_path}}" size="50"></input></label>
+    </select>
+    </label>
+
+    <label>Supporting Files<input type="checkbox"></input></label>
+    <input type="submit" value="OK">
+
+</form>
+
+{% endblock body%}

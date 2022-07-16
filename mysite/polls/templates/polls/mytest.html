@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Titel</title>
+</head>
+<body>
+<form action="{% url 'polls:mytest'  %}" method="get">
+      <label for="mysite">Enter Name:</label>
+    <input id="mysite" type="text" name="name_field" value="Default value">
+    <input id="from_date" type="date" name="fdate">
+    <input id="to_date" type="date" name="tdate">
+    <div>
+        <input id="report_file" type="file" name="report1" >
+    </div>
+    <input type="submit" value="ok">
+
+    <select name="db" >
+        {% for rep in ques%}
+            <option id="{{rep}}" value="{{rep}}" label="{{rep}}" style="width:150px;"></option>
+    {% endfor%}
+    </select>
+
+    </form>
+<!--    {% for rep,re in dic.items%}-->
+<!--    <p>{re}</p>-->
+<!--    {% endfor%}-->
+<!--fdate tdate db-->
+
+
+</body>
+</html>
