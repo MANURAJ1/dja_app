@@ -4,3 +4,5 @@ verify_ssl = true
 
 [packages]
 django = "<1.12"
+pandas = "*"
+sqlalchemy = "*"
