@@ -1,3 +1,5 @@
+import os,sys
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -6,21 +8,23 @@ from django.views import generic
 from . import  forms
 import subprocess
 from .models import Choice, Question,Report_master
+from .py_scripts import audit_zscore
 
 import pandas as pd
 from sqlalchemy import  create_engine
+from py_scripts import *
 # import polls/models
 
 dbList=["raj"]
 server="DESKTOP-FO3VN7C"
 engine = create_engine('mssql+pymssql://' + server + '/' + dbList[0])
+db_name = engine.execute("select name from sys.databases where has_dbaccess(name)=1").fetchall()
 
 def a(request):
     repo=['r1','r2']
     dic={'first_name': 'John', 'last_name': 'Doe'}
     db_list=[]
     engine = create_engine('mssql+pymssql://' + server + '/master')
-    db_name = engine.execute("select name from sys.databases where has_dbaccess(name)=1").fetchall()
     for i in db_name:
         db_list.append(i[0])
     if request.method!='POST':
@@ -40,7 +44,6 @@ def a(request):
             response = HttpResponse(a)
             response['Content-Disposition'] = 'attachment; filename=' + "sds"
             return response
-
 
 def form1(request):
     form= forms.Formname()
@@ -68,10 +71,6 @@ class IndexView(generic.ListView):
         return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
-
-
-
-
 
 
 class DetailView(generic.DetailView):
@@ -112,11 +111,15 @@ class ResultsView(generic.DetailView):
 
 def report_master(request):
     x=Report_master.objects.all()
+    db_name = engine.execute("select name from sys.databases where has_dbaccess(name)=1").fetchall()
     if request.method != 'POST':
-        return render(request, "polls/report_master.html", context={"report_list": x})
+        return render(request, "polls/report_master.html", context={"report_list": x,"db_name":db_name})
     else:
-        subprocess(py,request.POST[''])
-        return render()
+        try:
+            subprocess(sys.executable,request.POST[''])
+            return HttpResponse("File generated in "+os.getcwd())
+        except:
+            return HttpResponse("Error!")
         # subprocess.run([request.POST['']])
 
 

@@ -8,6 +8,5 @@ admin.site.index_title='Welcome To EAG Site'
 
 urlpatterns = [
     url(r'^polls/', include('polls.urls')),
-    url(r'', include('polls.urls')),
     url(r'^admin/', admin.site.urls),
 ]

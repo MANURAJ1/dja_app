@@ -6,3 +6,5 @@ verify_ssl = true
 django = "<1.12"
 pandas = "*"
 sqlalchemy = "*"
+pymssql="*"
+pyodbc = "*"
