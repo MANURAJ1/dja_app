@@ -111,12 +111,12 @@ class ResultsView(generic.DetailView):
 
 def report_master(request):
     x=Report_master.objects.all()
-    db_name = engine.execute("select name from sys.databases where has_dbaccess(name)=1").fetchall()
     if request.method != 'POST':
         return render(request, "polls/report_master.html", context={"report_list": x,"db_name":db_name})
     else:
         try:
             subprocess(sys.executable,request.POST[''])
+
             return HttpResponse("File generated in "+os.getcwd())
         except:
             return HttpResponse("Error!")
